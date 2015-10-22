@@ -28,11 +28,9 @@ class ViewController: UIViewController ,UITextFieldDelegate,UIPickerViewDelegate
         self.numberTextField.delegate = self
         
         numberPicker.delegate = self
-        //numberPicker.dataSource = self
 
         self.numberTextField.text = "1"
         self.numberTextField.inputView = numberPicker
-        //musicIndex = self.numberTextField.text.toInt()!
         
         //ToolBar作成。ニョキ担当
         myToolBar = UIToolbar(frame: CGRectMake(0, self.view.frame.size.height/6, self.view.frame.size.width, 40.0))
@@ -132,7 +130,6 @@ class ViewController: UIViewController ,UITextFieldDelegate,UIPickerViewDelegate
         
         if(0 <= userNumber && userNumber <= musicCount){
             println("編集終了")
-            
             musicIndex = numberTextField.text.toInt()!
             musicIndex--
             setMusicInfo()
@@ -145,9 +142,22 @@ class ViewController: UIViewController ,UITextFieldDelegate,UIPickerViewDelegate
         numberTextField.resignFirstResponder();
         return true;
     }
-    
-    
+    @IBAction func backTrack(sender: AnyObject) {
+        //前の曲を表示
+        if(0 < musicIndex){
+            musicIndex--
+            setMusicInfo()
+            self.numberTextField.text = "\(musicIndex + 1)"
+        }
+    }
 
-
+    @IBAction func nextTrack(sender: AnyObject) {
+        //次の曲を表示
+        if(musicIndex < musicCount - 1){
+            musicIndex++
+            setMusicInfo()
+            self.numberTextField.text = "\(musicIndex + 1)"
+        }
+    }
 }
 
