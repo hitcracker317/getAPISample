@@ -12,7 +12,8 @@ class ViewController: UIViewController ,UITextFieldDelegate,UIPickerViewDelegate
 
     var musicIndex:Int = 0 //曲のインデックス番号
     var musicCount:Int = 0 //取得した曲数
-    var musicArray:NSArray = [] //API叩いて取得した曲の情報(NSDictionary)を格納する配列
+    
+    var jsonDict = [:] //APIから取得したデータを保持し続けるDictionary型の変数
     
     var keyBoardRect:CGRect = CGRectMake(0, 0, 0, 0) //キーボードのRect
     
@@ -50,45 +51,46 @@ class ViewController: UIViewController ,UITextFieldDelegate,UIPickerViewDelegate
         
         self.getAPI()
     }
-    
-    func getAPI(){
-        //iTunesのAPIを叩くメソッド
         
-        var urlString = "https://itunes.apple.com/search?term=beatles&country=JP&lang=ja_jp&media=music" //API(url)の文字列を生成する
+    func getAPI(){
+        //iTunesのAPIを叩いてJSONを取得するメソッド
+        
+        var urlString = "https://itunes.apple.com/search?term=fear-and-loathing-in-las-vegas&country=JP&lang=ja_jp&media=music" //API(url)の文字列を生成する
         var url = NSURL(string: urlString) //URLの文字列をURL型に変換
         var data = NSData(contentsOfURL: url!) //URLをData型に変換
-        let jsonDict = NSJSONSerialization.JSONObjectWithData(data!, options: nil, error: nil) as! NSDictionary //jsonに変換
+        jsonDict = NSJSONSerialization.JSONObjectWithData(data!, options: nil, error: nil) as! NSDictionary //jsonに変換
         println(jsonDict)
+        
+        setMusicInfo()
+    }
+    
+    func setMusicInfo(){
+        //曲情報を切り替えた際に取得した曲情報をセットするメソッド
         
         //iTunes APIから取得した曲数
         var musicCountString:NSNumber = jsonDict["resultCount"] as! NSNumber
         musicCount = Int(musicCountString) //NSNumberをIntに変換
         println("取得した曲数\(musicCount)")
         
-        //曲の一覧情報を取得
-        musicArray = jsonDict["results"] as! NSArray
+        //ラベルにx/x曲目の文字列を表示
+        var countString = "\(musicIndex + 1)/\(musicCount) 曲目"
+        self.countLabel.text = countString
         
-        setMusicInfo()
-    }
-    
-    func setMusicInfo(){
+        
+        var musicArray = jsonDict["results"] as! NSArray //API叩いて取得した曲の情報(NSDictionary)を格納する配列
+        
+        //Labelに曲名を表示
         var trackName = musicArray[musicIndex]["trackName"] as! String
-        self.trackNameLabel.text = trackName //Labelに曲名を表示
+        self.trackNameLabel.text = trackName //曲名
         println("曲名:\(trackName)")
         
-        //アートワークを取得(取得した値は画像のurlの文字列)
-        //URLからImageを作成しImageViewに表示する
-        //urlを文字列で生成
-        var artworkURL = musicArray[musicIndex]["artworkUrl100"] as! String //urlを文字列で取得
-        var imageURL = NSURL(string: artworkURL) //stringをurl型に変換
+        //アートワークを取得&表示(取得した値は画像のurlの文字列)
+        var artWorkURL = musicArray[musicIndex]["artworkUrl100"] as! String //urlを文字列で取得
+        var imageURL = NSURL(string: artWorkURL) //stringをurl型に変換
         var imageData = NSData(contentsOfURL: imageURL!) //data型に変換
         var image = UIImage(data: imageData!) //image型に変換
         self.imageView.image = image //ImageViewに表示
         
-        //ラベルにx/x曲目の文字列を表示
-        var countString = "\(musicIndex + 1)/\(musicCount) 曲目"
-        self.countLabel.text = countString
-
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -106,7 +108,7 @@ class ViewController: UIViewController ,UITextFieldDelegate,UIPickerViewDelegate
         self.numberTextField.text = "\(row + 1)"
     }
     
-    //閉じる
+    //ピッカービューを閉じる
     func onClick(sender: UIBarButtonItem) {
         self.numberTextField.resignFirstResponder()
     }
@@ -129,6 +131,7 @@ class ViewController: UIViewController ,UITextFieldDelegate,UIPickerViewDelegate
         numberTextField.resignFirstResponder();
         return true;
     }
+    
     @IBAction func backTrack(sender: AnyObject) {
         //前の曲を表示
         if(0 < musicIndex){
