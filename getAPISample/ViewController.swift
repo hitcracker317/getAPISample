@@ -7,15 +7,17 @@
 //
 
 import UIKit
+import AVFoundation
+import AVKit
 
-class ViewController: UIViewController ,UITextFieldDelegate,UIPickerViewDelegate/*,UIPickerViewDataSource*/{
+class ViewController: UIViewController ,UITextFieldDelegate,UIPickerViewDelegate{
 
     var musicIndex:Int = 0 //曲のインデックス番号
     var musicCount:Int = 0 //取得した曲数
     
     var jsonDict = [:] //APIから取得したデータを保持し続けるDictionary型の変数
     
-    var keyBoardRect:CGRect = CGRectMake(0, 0, 0, 0) //キーボードのRect
+    var avPlayer:AVPlayer! //AVPlayerを定義
     
     @IBOutlet weak var numberTextField: UITextField!
     @IBOutlet weak var trackNameLabel: UILabel!
@@ -51,7 +53,7 @@ class ViewController: UIViewController ,UITextFieldDelegate,UIPickerViewDelegate
         
         self.getAPI()
     }
-        
+    
     func getAPI(){
         //iTunesのAPIを叩いてJSONを取得するメソッド
         
@@ -91,6 +93,17 @@ class ViewController: UIViewController ,UITextFieldDelegate,UIPickerViewDelegate
         var image = UIImage(data: imageData!) //image型に変換
         self.imageView.image = image //ImageViewに表示
         
+        //曲のurlを取得して再生
+        var previewULR = musicArray[musicIndex]["previewUrl"] as! String
+        self.playMusic(previewUrl: previewULR)
+    }
+    
+    func playMusic(#previewUrl:String){
+        //AVFoundationを使用して曲を再生する
+        var url = NSURL(string: previewUrl)
+        avPlayer = AVPlayer(URL: url)
+        
+        avPlayer.play()
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {

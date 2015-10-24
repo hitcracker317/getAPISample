@@ -13,6 +13,8 @@
 		DCF134931BD8BD4A0059F43D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCF134921BD8BD4A0059F43D /* Images.xcassets */; };
 		DCF134961BD8BD4A0059F43D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCF134941BD8BD4A0059F43D /* LaunchScreen.xib */; };
 		DCF134A21BD8BD4A0059F43D /* getAPISampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF134A11BD8BD4A0059F43D /* getAPISampleTests.swift */; };
+		DCF299591BDA152100756C20 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCF299581BDA152100756C20 /* AVFoundation.framework */; };
+		DCF2995B1BDA152900756C20 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCF2995A1BDA152900756C20 /* AVKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,8 @@
 		DCF1349B1BD8BD4A0059F43D /* getAPISampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = getAPISampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCF134A01BD8BD4A0059F43D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DCF134A11BD8BD4A0059F43D /* getAPISampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getAPISampleTests.swift; sourceTree = "<group>"; };
+		DCF299581BDA152100756C20 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		DCF2995A1BDA152900756C20 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +47,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCF2995B1BDA152900756C20 /* AVKit.framework in Frameworks */,
+				DCF299591BDA152100756C20 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +65,8 @@
 		DCF1347D1BD8BD490059F43D = {
 			isa = PBXGroup;
 			children = (
+				DCF2995A1BDA152900756C20 /* AVKit.framework */,
+				DCF299581BDA152100756C20 /* AVFoundation.framework */,
 				DCF134881BD8BD4A0059F43D /* getAPISample */,
 				DCF1349E1BD8BD4A0059F43D /* getAPISampleTests */,
 				DCF134871BD8BD4A0059F43D /* Products */,
@@ -409,6 +417,7 @@
 				DCF134A71BD8BD4A0059F43D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DCF134A81BD8BD4A0059F43D /* Build configuration list for PBXNativeTarget "getAPISampleTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +426,7 @@
 				DCF134AA1BD8BD4A0059F43D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
